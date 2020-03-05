@@ -1,44 +1,35 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
-public class ChatClient {
+/**
+ * Extends the base chat client to provide a client which a user can interact with via the console.
+ * @author Joe Downard.
+ */
+public class ChatClient extends ChatBaseClient{
 
-    private Socket server;
-
+    /**
+     * Constructor which passes information to base class constructor to set up values.
+     * @param ip IP of the server to connect to
+     * @param port Port of the server to connect to
+     */
     public ChatClient (String ip, int port) {
-        try {
-            server = new Socket(ip, port);
-            sendUsername();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        super(ip, port);
     }
 
+    /**
+     * Listens for server input via the socket. Prints any messages received onto the console.
+     * Listens for user input via the console. Sends any messages received to the server.
+     */
+    @Override
     public void go () {
+        listen();
+
         try {
             BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
-            BufferedReader serverIn = new BufferedReader(new InputStreamReader(server.getInputStream()));
-
-            new Thread(() -> {
-                System.out.println("server listener running!");
-                try {
-                    String serverLineIn;
-                    while ((serverLineIn = serverIn.readLine()) != null) {
-                        System.out.println(serverLineIn);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-
             String clientLineIn;
             while ((clientLineIn = userIn.readLine()) != null) {
-                ChatUtils.sendMessage(clientLineIn, server);
+                sendMessage(clientLineIn, server);
             }
 
         } catch (IOException e) {
@@ -52,6 +43,10 @@ public class ChatClient {
         }
     }
 
+    /**
+     * Prompts the user at server connection for a username.
+     */
+    @Override
     public void sendUsername () {
         String username = "/username Guest";
         BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
@@ -59,13 +54,16 @@ public class ChatClient {
         System.out.println("Connection Established. Enter a username:");
         try {
             username = "/username " + "\""+ userIn.readLine() + "\"";
-            ChatUtils.sendMessage(username, server);
+            sendMessage(username, server);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
+    /**
+     * Processes arguments passed at runtime and sets up a new object based on the arguments.
+     * @param args The arguments passed at runtime.
+     */
     public static void main(String[] args) {
         String ip = "localhost";
         int port = 14001;
