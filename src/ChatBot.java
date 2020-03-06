@@ -60,9 +60,9 @@ public class ChatBot extends ChatBaseClient{
         int port = 14001;
 
         for (int i = 0; i < args.length; i++) { // process the arguments and set variables appropriately
-            if (args[i] == "-cca") {
+            if (args[i].equals("-cca")) {
                 ip = args[i+1];
-            } else if (args[i] == "-ccp") {
+            } else if (args[i].equals("-ccp")) {
                 port = Integer.parseInt(args[i+1]);
             }
         }

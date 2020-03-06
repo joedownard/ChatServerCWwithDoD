@@ -167,7 +167,7 @@ public class ChatServer {
         int port = 14001; // default port
 
         for (int i = 0; i < args.length; i++) { // process the arguments and set variables appropriately
-            if (args[i] == "-csp") {
+            if (args[i].equals("-csp")) {
                 port = Integer.parseInt(args[i + 1]);
             }
         }

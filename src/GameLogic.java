@@ -44,16 +44,16 @@ public class GameLogic {
         try {
             Stream<Path> fileWalk;
             if (System.getProperty("os.name").equals("Windows")) {
-                fileWalk = Files.walk(Paths.get("src/maps"));
+                fileWalk = Files.walk(Paths.get("src/maps")); // if on windows look in this directory
             } else {
-                fileWalk = Files.walk(Paths.get("src/maps"));
+                fileWalk = Files.walk(Paths.get("maps")); // if on linux look in this directory
             }
             List<String> files = fileWalk.filter(Files::isRegularFile)
                     .map(Path::toString)
                     .collect(Collectors.toList()); // place all the file names within the map directory into a list
 
             if (files.isEmpty()) { // ensure there are DoD.maps available to play, if not then quit the game
-                player.processResult("No DoD.maps in /DoD.maps directory! Add a map to /DoD.maps.");
+                player.processResult("No maps in /maps directory! Add a map to /maps.");
                 player.processResult("Quitting.");
                 gameState = State.END;
                 return;

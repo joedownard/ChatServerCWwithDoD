@@ -1,3 +1,10 @@
+How to run:
+javac *.java
+java ChatServer
+java ChatClient
+java ChatBot
+java ChatDoD
+
 Files relating to Chat Server-Client:
 ChatBaseClient.java
 ChatBot.java
