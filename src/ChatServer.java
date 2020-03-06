@@ -142,20 +142,20 @@ public class ChatServer {
      */
     public ArrayList<String> splitCommand (String command) {
         ArrayList<String> elements = new ArrayList<>();
-        String tempElement = "";
+        StringBuilder tempElement = new StringBuilder();
         boolean ignoreSpace = false;
 
         for (char c : command.toCharArray()) {
             if (c == '"') {
                 ignoreSpace = !ignoreSpace;
             } else if (c == ' ' && !ignoreSpace) {
-                elements.add(tempElement);
-                tempElement = "";
+                elements.add(tempElement.toString());
+                tempElement = new StringBuilder();
             } else {
-                tempElement += c;
+                tempElement.append(c);
             }
         }
-        elements.add(tempElement);
+        elements.add(tempElement.toString());
         return elements;
     }
 

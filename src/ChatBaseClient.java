@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * Abstract class that all chat clients should be based on. Provides basic functions which can be overwritten to change functionality.
@@ -22,8 +21,6 @@ public abstract class ChatBaseClient {
         try {
             server = new Socket(ip, port);
             sendUsername(); // send the server the username of the client
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
