@@ -1,7 +1,3 @@
-package DoD;
-
-import DoD.Player;
-
 import java.util.Random;
 
 public class BotPlayer extends Player {

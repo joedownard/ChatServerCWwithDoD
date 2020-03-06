@@ -1,5 +1,3 @@
-import DoD.HumanPlayer;
-
 import java.util.ArrayList;
 
 public class RemoteHumanPlayer extends HumanPlayer {

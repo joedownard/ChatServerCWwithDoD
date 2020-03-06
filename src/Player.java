@@ -1,5 +1,3 @@
-package DoD;
-
 public abstract class Player {
 
     private int x;

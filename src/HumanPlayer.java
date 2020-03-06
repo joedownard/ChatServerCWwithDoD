@@ -1,5 +1,3 @@
-package DoD;
-
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {

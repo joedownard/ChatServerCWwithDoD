@@ -1,5 +1,3 @@
-import DoD.GameLogic;
-
 public class ChatDoD extends ChatBaseClient{
 
     private RemoteHumanPlayer player;

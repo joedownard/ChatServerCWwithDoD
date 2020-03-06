@@ -101,7 +101,6 @@ public class ChatServer {
         if (message.startsWith("/")) {
             processCommand(message, client);
         } else {
-            System.out.println("broadcasting msg");
             broadcastMessage(client.getUsername() + ": " + message, client);
         }
     }
