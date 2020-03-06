@@ -42,7 +42,7 @@ public class ClientConnection extends Thread {
                     Thread.sleep(100); // make sure the thread can be interrupted
                 }
                 catch (InterruptedException e) {
-                    return;
+                    return; // shut down cleanly
                 }
             }
         } catch (IOException e) {
