@@ -39,7 +39,7 @@ public class ClientConnection extends Thread {
                 server.processChat(userLineIn, this);
 
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(100); // make sure the thread can be interrupted
                 }
                 catch (InterruptedException e) {
                     return;

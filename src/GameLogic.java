@@ -44,9 +44,9 @@ public class GameLogic {
         try {
             Stream<Path> fileWalk;
             if (System.getProperty("os.name").equals("Windows")) {
-                fileWalk = Files.walk(Paths.get("src/DoD/maps"));
+                fileWalk = Files.walk(Paths.get("src/maps"));
             } else {
-                fileWalk = Files.walk(Paths.get("src/DoD/maps"));
+                fileWalk = Files.walk(Paths.get("src/maps"));
             }
             List<String> files = fileWalk.filter(Files::isRegularFile)
                     .map(Path::toString)

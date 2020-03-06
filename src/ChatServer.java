@@ -19,8 +19,8 @@ public class ChatServer {
      */
     public ChatServer(int port) {
         try {
-            serverSocket = new ServerSocket(port);
-            connectionList = new ArrayList<>();
+            serverSocket = new ServerSocket(port); // set up a server socket based on port provided
+            connectionList = new ArrayList<>(); // create an array list to store all client connections
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,7 +34,7 @@ public class ChatServer {
     public void go() {
         new Thread(() -> {
             while (!serverSocket.isClosed()) {
-                try {
+                try { // listen for new client connections
                     ClientConnection newConnection = new ClientConnection(serverSocket.accept(), this); // a new thread is created to handle each connection
                     newConnection.start();
                     connectionList.add(newConnection); // a list of current connections is kept
@@ -54,7 +54,7 @@ public class ChatServer {
                     for (ClientConnection clientThread : connectionList) {
                         clientThread.interrupt(); // Interrupt threads so they can shut down cleanly.
                     }
-                    serverSocket.close();
+                    serverSocket.close(); // ensure server socket is closed when we are done
                     return;
                 }
             }
@@ -85,7 +85,7 @@ public class ChatServer {
     public void directMessage (String message, String receivingUser, ClientConnection client) {
         boolean userFound = false;
         for (ClientConnection c : connectionList) {
-           if (c.getUsername().equals(receivingUser))
+           if (c.getUsername().equals(receivingUser)) // ensure user matches the name provided
                userFound = true;
                 c.sendMessage(message);
         }
@@ -101,7 +101,7 @@ public class ChatServer {
      * @param client The client who sent the message
      */
     public void processChat (String message, ClientConnection client) {
-        if (message.startsWith("/")) {
+        if (message.startsWith("/")) { // process command messages separately
             processCommand(message, client);
         } else {
             broadcastMessage(client.getUsername() + ": " + message, client);
@@ -114,7 +114,7 @@ public class ChatServer {
      * @param client The client that sent the command.
      */
     public void processCommand (String command, ClientConnection client) {
-        ArrayList<String> elements = splitCommand(command);
+        ArrayList<String> elements = splitCommand(command); // split the message up to its elements
 
         if (elements.size() >= 2) {
             switch (elements.get(0)) {
@@ -136,7 +136,7 @@ public class ChatServer {
     }
 
     /**
-     * Helper function to split a command into elements for furter processing.
+     * Helper function to split a command into elements for further processing.
      * @param command The command to split.
      * @return The elements of the command.
      */
@@ -166,7 +166,7 @@ public class ChatServer {
     public static void main(String[] args) {
         int port = 14001; // default port
 
-        for (int i = 0; i < args.length; i++) {
+        for (int i = 0; i < args.length; i++) { // process the arguments and set variables appropriately
             if (args[i] == "-csp") {
                 port = Integer.parseInt(args[i + 1]);
             }

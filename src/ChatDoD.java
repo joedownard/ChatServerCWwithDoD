@@ -11,8 +11,8 @@ public class ChatDoD extends ChatBaseClient{
      * @param port Port of the server to connect to.
      */
     public ChatDoD(String ip, int port) {
-        super(ip, port);
-        joined = false;
+        super(ip, port); // allow base class to set up socket
+        joined = false; // keep track of whether a player has joined the games
     }
 
     /**
@@ -21,17 +21,18 @@ public class ChatDoD extends ChatBaseClient{
      */
     @Override
     public void processChat(String message) {
-        String rawMessage = message.substring(message.indexOf(':') + 2);
-        String username = message.substring(0, message.indexOf(':'));
+        String rawMessage = message.substring(message.indexOf(':') + 2); // manipulate the message to get only contents
+        String username = message.substring(0, message.indexOf(':')); // manipulate the message to get username
 
-        if (!username.equals(playerName) || !joined) {
+        if (username.equals(playerName) || !joined) {
             if (joined) {
-                player.addCommand(rawMessage);
+                player.addCommand(rawMessage); // put any messages from the user into a command queue
             } else if (rawMessage.equals("JOIN")) {
                 joined = true;
                 sendMessage("Player " + username + " has been spawned.", server);
+                playerName = username; // lock the game to the first player to join
                 player = new RemoteHumanPlayer(this);
-                new Thread(() -> {
+                new Thread(() -> { // start a new game thread
                     game = new GameLogic();
                     game.newRemotePlayer(player);
                     game.go();
@@ -45,7 +46,7 @@ public class ChatDoD extends ChatBaseClient{
      * @param output Output from the game
      */
     public void gameOutput (String output) {
-        sendMessage(output, server);
+        sendMessage(output, server); // pass the game output back to the server
     }
 
     /**
@@ -64,7 +65,7 @@ public class ChatDoD extends ChatBaseClient{
         String ip = "localhost";
         int port = 14001;
 
-        for (int i = 0; i < args.length; i++) {
+        for (int i = 0; i < args.length; i++) { // process the arguments and set variables appropriately
             if (args[i].equals("-cca")) {
                 ip = args[i+1];
             } else if (args[i].equals("-ccp")) {

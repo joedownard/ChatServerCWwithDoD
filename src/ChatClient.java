@@ -23,7 +23,7 @@ public class ChatClient extends ChatBaseClient{
      */
     @Override
     public void go () {
-        listen();
+        listen(); // set up a thread to listen for input
 
         try {
             BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
@@ -36,7 +36,7 @@ public class ChatClient extends ChatBaseClient{
             e.printStackTrace();
         } finally {
             try {
-                server.close();
+                server.close(); // ensure socket is closed once we are done
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -52,7 +52,7 @@ public class ChatClient extends ChatBaseClient{
         BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("Connection Established. Enter a username:");
-        try {
+        try { // prompt the user for a username
             username = "/username " + "\""+ userIn.readLine() + "\"";
             sendMessage(username, server);
         } catch (IOException e) {
@@ -68,7 +68,7 @@ public class ChatClient extends ChatBaseClient{
         String ip = "localhost";
         int port = 14001;
 
-        for (int i = 0; i < args.length; i++) {
+        for (int i = 0; i < args.length; i++) { // process the arguments and set variables appropriately
             if (args[i] == "-cca") {
                 ip = args[i+1];
             } else if (args[i] == "-ccp") {
