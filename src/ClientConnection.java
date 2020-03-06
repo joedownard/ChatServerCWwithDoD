@@ -37,6 +37,13 @@ public class ClientConnection extends Thread {
             while ((userLineIn = userIn.readLine()) != null) {
                 System.out.println(username + ": " + userLineIn);
                 server.processChat(userLineIn, this);
+
+                try {
+                    Thread.sleep(100);
+                }
+                catch (InterruptedException e) {
+                    return;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

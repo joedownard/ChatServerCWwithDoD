@@ -51,6 +51,9 @@ public class ChatServer {
             while ((adminLineIn = adminIn.readLine()) != null) {
                 if (adminLineIn.equals("EXIT")) {
                     System.out.println("Exiting.");
+                    for (ClientConnection clientThread : connectionList) {
+                        clientThread.interrupt(); // Interrupt threads so they can shut down cleanly.
+                    }
                     serverSocket.close();
                     return;
                 }

@@ -21,7 +21,7 @@ public abstract class ChatBaseClient {
     public ChatBaseClient (String ip, int port) {
         try {
             server = new Socket(ip, port);
-            sendUsername();
+            sendUsername(); // send the server the username of the client
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -67,7 +67,7 @@ public abstract class ChatBaseClient {
                 e.printStackTrace();
             } finally {
                 try {
-                    server.close();
+                    server.close(); // ensure the socket is closed once we are done
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -80,7 +80,7 @@ public abstract class ChatBaseClient {
      * @param message The message to print.
      */
     public void processChat (String message) {
-        System.out.println(message);
+        System.out.println(message); // print out messages received
     }
 
     /**
